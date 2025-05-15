@@ -44,3 +44,9 @@ coverage/
 /frontend/package-lock.json
 /frontend/build/
 /frontend/coverage/
+
+/admin/node_modules/
+/admin/.env
+/admin/package-lock.json
+/admin/build/
+/admin/coverage/
