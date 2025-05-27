@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-import { doctors } from "../assets/assets_frontend/assets";
 import axios from "axios";
 import { toast } from "react-toastify";
 export const AppContext = createContext();
@@ -55,6 +54,7 @@ const AppContextProvider = (props) => {
 
   const value = {
     doctors,
+    getDoctorsData,
     currency,
     token,
     setToken,
