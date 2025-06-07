@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { AdminContext } from '../context/AdminContext.jsx'
+import { DoctorContext } from '../context/DoctorContext.jsx'
 
 
 const Login = () => {
@@ -11,6 +12,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const {setAToken, backendUrl} = useContext(AdminContext)
+  const {setDToken, dToken} = useContext(DoctorContext)
   
   const onSubmitHandler = async (e)=>{
     console.log(backendUrl)
@@ -27,7 +29,17 @@ const Login = () => {
               toast.error(data.message || "Login failed");
               }
         } else {
-            toast.error("You're not authorized");
+            const {data} = await axios.post(backendUrl + '/api/doctor/login', {email, password})
+            if (data.success) {
+              localStorage.setItem('dToken', data.token);
+              setDToken(data.token);
+              console.log(data.token);
+              
+              toast.success("Login successful!");
+              // optionally redirect: navigate('/doctor/dashboard');
+            } else {
+              toast.error(data.message || "Login failed");
+              }
           }
       } catch (error) {
          toast.error(error.response?.data?.message || "Login failed");
